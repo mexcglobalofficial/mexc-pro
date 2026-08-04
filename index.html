@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MEXC Global — Trade. Earn. Grow.</title>
-    <!-- Tidio Live Chat -->
-    <script src="//code.tidio.co/uybsw5qviwgs9udrjyyokobmhehkkli7.js" async></script>
+    <!-- Tidio Live Chat - Removed to fix overlapping issue with navigation bar -->
+    <!-- <script src="//code.tidio.co/uybsw5qviwgs9udrjyyokobmhehkkli7.js" async></script> -->
     <style>
         /* ── Base Styles ── */
         * {
@@ -17,7 +17,7 @@
         body {
             background-color: #0b0e11;
             color: #eaecef;
-            padding-bottom: 75px;
+            padding-bottom: 85px; /* Slightly increased to ensure space for nav */
         }
         ::-webkit-scrollbar {
             width: 4px;
@@ -5656,11 +5656,8 @@
         }
 
         function openTidioChat() {
-            if (window.tidioChatApi) {
-                window.tidioChatApi.open();
-            } else {
-                window.open('https://www.tidio.com/chat/uybsw5qviwgs9udrjyyokobmhehkkli7', '_blank');
-            }
+            // Fallback: Use Telegram as primary support since Tidio chat was removed
+            window.open(TELEGRAM_CS_LINK, '_blank');
         }
 
         // ============================================
@@ -8668,5 +8665,3 @@
         })();
     </script>
 </body>
-</html>
-```
