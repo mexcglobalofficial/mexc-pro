@@ -3556,280 +3556,6 @@
     <!-- ============================================================ -->
     <script>
         // ============================================
-        // TRANSLATIONS (i18n) — full for all supported languages
-        // ============================================
-        const TRANSLATIONS = {
-            en: {
-                header: { title: "MEXC Global", signUp: "Sign Up" },
-                nav: { home: "Home", markets: "Markets", trade: "Trade", assets: "Assets", history: "History" },
-                home: {
-                    banner: { subtitle: "Your 0-Fee Gateway to Infinite Opportunities", tagline: "Blockchain Universal Traceability Platform" },
-                    promo: { gold: "TRADING GOLD", oil: "OIL FUTURES TRADING" },
-                    market: { featured: "Featured Asset", price: "Price", change: "24h Change" }
-                },
-                market: {
-                    tab: { crypto: "Crypto (100+)", futures: "Futures (25+)", forex: "Forex (100+)", commodities: "Commodities" },
-                    search: { placeholder: "Search pair (e.g. BTC, EUR/USD, Gold)..." },
-                    list: { pair: "Pair Name", price: "Last Price", change: "24h Change" }
-                },
-                trade: {
-                    live: "● Real-Time Live",
-                    estimatedPayout: "Estimated Payout:",
-                    timer: "⏱️ Active Order Countdown:",
-                    durationLabel: "Select Duration & Minimum Trade Tier:",
-                    time: { "30s": "30s (+45%)", "60s": "60s (+65%)", "120s": "120s (+90%)", "300s": "300s (+120%)" },
-                    investLabel: "Investment Amount (USDT)",
-                    investPlaceholder: "Min 50 USDT",
-                    buy: "BUY / HIGH ▲",
-                    sell: "SELL / LOW ▼"
-                },
-                assets: {
-                    title: "Assets",
-                    accountAssets: "Account assets",
-                    totalLabel: "Account assets",
-                    walletBreakdown: "Wallet Breakdowns",
-                    action: { deposit: "Deposit", withdraw: "Withdraw", exchange: "Exchange" }
-                },
-                auth: {
-                    signupTab: "Sign Up",
-                    loginTab: "Login",
-                    liveChat: "Live Chat",
-                    customerService: "Customer Service",
-                    emailPhone: "Email or Phone Number",
-                    emailPhonePlaceholder: "Enter email or phone number",
-                    password: "Password",
-                    passwordPlaceholder: "Enter password",
-                    confirmPassword: "Confirm Password",
-                    confirmPasswordPlaceholder: "Confirm password",
-                    verificationCode: "Verification Code (Phone Auth)",
-                    verificationCodePlaceholder: "Enter verification code",
-                    sendCode: "Send Code",
-                    signupBtn: "Sign Up",
-                    loginBtn: "Login"
-                },
-                profile: {
-                    title: "👤 User Profile Center",
-                    notVerified: "Not Verified",
-                    uploadHint: "Upload Photo",
-                    uploadLabel: "Tap photo to upload",
-                    language: "🌐 Language",
-                    regId: "🆔 User Registration ID",
-                    email: "📧 Registered Email / Identifier",
-                    passwordLabel: "🔒 Account Password",
-                    kycTitle: "Account Identity Verification (KYC)",
-                    kycDesc: "Please upload official identity documents to unlock full withdrawal capabilities.",
-                    kycFront: "Driver License / ID Card (Front)",
-                    kycFrontHint: "Upload clear photo of the front side",
-                    kycBack: "Driver License / ID Card (Back)",
-                    kycBackHint: "Upload clear photo of the back side",
-                    kycSelfie: "Selfie Holding ID Card",
-                    kycSelfieHint: "Take a selfie holding your ID card next to your face",
-                    kycSubmit: "📤 Submit Verification Docs",
-                    logout: "🚪 Logout Account"
-                },
-                deposit: {
-                    title: "💰 Deposit Crypto",
-                    selectAsset: "Select Asset",
-                    selectNetwork: "Select Deposit Network",
-                    amount: "Deposit Amount",
-                    amountPlaceholder: "Enter amount (e.g. 1)",
-                    address: "Deposit Address",
-                    copy: "Copy",
-                    submit: "I Have Deposited (Submit Order)",
-                    note: "Send only the specified asset to this address. Please attach a deposit slip for verification."
-                },
-                withdraw: {
-                    title: "💸 Withdraw Assets",
-                    selectAsset: "Select Asset",
-                    selectNetwork: "Withdrawal Network",
-                    address: "Withdrawal Address",
-                    addressPlaceholder: "Paste destination wallet address",
-                    qrUpload: "Upload Wallet QR Code Photo (Optional)",
-                    amount: "Amount",
-                    amountPlaceholder: "Min 10 USDT",
-                    confirm: "Confirm Withdrawal"
-                },
-                exchange: {
-                    title: "Exchange",
-                    balance: "Balance",
-                    fee: "Fee",
-                    ratio: "Exchange ratio",
-                    all: "All",
-                    amountPlaceholder: "Please enter the amount",
-                    exchangeBtn: "Exchange"
-                },
-                history: {
-                    title: "📋 Deposit & Withdrawal History",
-                    th: { type: "Type", asset: "Asset", amount: "Amount", date: "Date", status: "Status" }
-                },
-                admin: {
-                    title: "🔐 Secret Admin Control Panel",
-                    searchLabel: "Search User by Registration Code / ID",
-                    searchPlaceholder: "e.g. REG-849201",
-                    searchBtn: "Search",
-                    userEmail: "User Email/Phone:",
-                    userReg: "Regional Code:",
-                    userUsdt: "USDT Balance:",
-                    balanceMgmt: "💰 Balance Management",
-                    tradeControls: "⚙️ Trade & KYC Controls",
-                    tradeModeLabel: "Trade Outcome Mode Setting",
-                    tradeMode: { random: "Random (Market Price Default)", win: "Force Win", lose: "Force Lose" },
-                    kycDecision: "KYC Verification Decision",
-                    kycApprove: "✅ Approve KYC",
-                    kycReject: "❌ Reject KYC",
-                    pendingQueue: "📦 Pending Transactions Queue"
-                },
-                newcoins: {
-                    holdings: "My New Coin Holdings",
-                    buyAmount: "Purchase Amount (USDT)",
-                    buyPlaceholder: "Enter amount (min $1000)",
-                    sell: "Sell",
-                    sellConfirm: "Sell {{amount}} {{symbol}} at ${{price}}?",
-                    sellProfit: "Profit: ${{profit}} ({{pct}}%)",
-                    sellLoss: "Loss: ${{loss}} ({{pct}}%)",
-                    sold: "Sold successfully!",
-                    pnl: "PnL",
-                    value: "Value",
-                    avgPrice: "Avg Price"
-                }
-            },
-            my: {
-                header: { title: "MEXC Global", signUp: "မှတ်ပုံတင်ရန်" },
-                nav: { home: "ပင်မ", markets: "စျေးကွက်များ", trade: "ကုန်သွယ်မှု", assets: "ပိုင်ဆိုင်မှုများ", history: "မှတ်တမ်း" },
-                home: {
-                    banner: { subtitle: "အခကြေးငွေမဲ့ အဆုံးမဲ့အခွင့်အလမ်းများဆီသို့ တံခါးပေါက်", tagline: "Blockchain ကမ္ဘာလုံးဆိုင်ရာ ခြေရာခံနိုင်သော ပလက်ဖောင်း" },
-                    promo: { gold: "ရွှေကုန်သွယ်မှု", oil: "ရေနံအနာဂတ်ကုန်သွယ်မှု" },
-                    market: { featured: "ထူးခြားသည့် ပိုင်ဆိုင်မှု", price: "စျေးနှုန်း", change: "၂၄နာရီ အပြောင်းအလဲ" }
-                },
-                market: {
-                    tab: { crypto: "ခရစ်တို (၁၀၀+)", futures: "အနာဂတ် (၂၅+)", forex: "ငွေကြေး (၁၀၀+)", commodities: "ကုန်စည်" },
-                    search: { placeholder: "အတွဲရှာရန် (ဥပမာ BTC၊ EUR/USD၊ ရွှေ)..." },
-                    list: { pair: "အတွဲအမည်", price: "နောက်ဆုံးစျေး", change: "၂၄နာရီ အပြောင်းအလဲ" }
-                },
-                trade: {
-                    live: "● အချိန်နှင့်တပြေးညီ",
-                    estimatedPayout: "ခန့်မှန်းအမြတ်:",
-                    timer: "⏱️ ကုန်သွယ်မှုအမိန့် နောက်ပြန်ရေတွက်ခြင်း:",
-                    durationLabel: "ကြာချိန်နှင့် အနည်းဆုံးကုန်သွယ်မှုအဆင့် ရွေးပါ:",
-                    time: { "30s": "၃၀စက္ကန့် (+၄၅%)", "60s": "၆၀စက္ကန့် (+၆၅%)", "120s": "၁၂၀စက္ကန့် (+၉၀%)", "300s": "၃၀၀စက္ကန့် (+၁၂၀%)" },
-                    investLabel: "ရင်းနှီးမှုပမာဏ (USDT)",
-                    investPlaceholder: "အနည်းဆုံး ၅၀ USDT",
-                    buy: "ဝယ်မည် / မြင့် ▲",
-                    sell: "ရောင်းမည် / နိမ့် ▼"
-                },
-                assets: {
-                    title: "ပိုင်ဆိုင်မှုများ",
-                    accountAssets: "အကောင့်ပိုင်ဆိုင်မှုများ",
-                    totalLabel: "အကောင့်ပိုင်ဆိုင်မှုများ",
-                    walletBreakdown: "ပိုက်ဆံအိတ် အသေးစိတ်",
-                    action: { deposit: "သွင်းငွေ", withdraw: "ထုတ်ငွေ", exchange: "လဲလှယ်" }
-                },
-                auth: {
-                    signupTab: "မှတ်ပုံတင်ရန်",
-                    loginTab: "ဝင်ရန်",
-                    liveChat: "တိုက်ရိုက်စကားပြော",
-                    customerService: "ဖောက်သည်ဝန်ဆောင်မှု",
-                    emailPhone: "အီးမေးလ် သို့မဟုတ် ဖုန်းနံပါတ်",
-                    emailPhonePlaceholder: "အီးမေးလ် သို့မဟုတ် ဖုန်းနံပါတ် ထည့်ပါ",
-                    password: "စကားဝှက်",
-                    passwordPlaceholder: "စကားဝှက် ထည့်ပါ",
-                    confirmPassword: "စကားဝှက် အတည်ပြု",
-                    confirmPasswordPlaceholder: "စကားဝှက် အတည်ပြုပါ",
-                    verificationCode: "အတည်ပြုကုဒ် (ဖုန်းဖြင့်)",
-                    verificationCodePlaceholder: "အတည်ပြုကုဒ် ထည့်ပါ",
-                    sendCode: "ကုဒ်ပို့ရန်",
-                    signupBtn: "မှတ်ပုံတင်ရန်",
-                    loginBtn: "ဝင်ရန်"
-                },
-                profile: {
-                    title: "👤 အသုံးပြုသူ ပရိုဖိုင်",
-                    notVerified: "အတည်မပြုရသေး",
-                    uploadHint: "ဓာတ်ပုံတင်ရန်",
-                    uploadLabel: "ဓာတ်ပုံတင်ရန် နှိပ်ပါ",
-                    language: "🌐 ဘာသာစကား",
-                    regId: "🆔 အသုံးပြုသူ ID",
-                    email: "📧 မှတ်ပုံတင်ထားသော အီးမေးလ်",
-                    passwordLabel: "🔒 စကားဝှက်",
-                    kycTitle: "အကောင့် အထောက်အထားစစ်ဆေးခြင်း (KYC)",
-                    kycDesc: "ငွေထုတ်ခြင်းကို အပြည့်အဝအသုံးပြုရန် တရားဝင်စာရွက်စာတမ်းများ တင်ပါ",
-                    kycFront: "ယာဉ်မောင်းလိုင်စင်/မှတ်ပုံတင် (ရှေ့)",
-                    kycFrontHint: "ရှေ့ဘက် ရှင်းလင်းသောဓာတ်ပုံ တင်ပါ",
-                    kycBack: "ယာဉ်မောင်းလိုင်စင်/မှတ်ပုံတင် (ကျော)",
-                    kycBackHint: "ကျောဘက် ရှင်းလင်းသောဓာတ်ပုံ တင်ပါ",
-                    kycSelfie: "မှတ်ပုံတင်ကိုင်ထားသော ကိုယ်တိုင်ဓာတ်ပုံ",
-                    kycSelfieHint: "မျက်နှာဘေးတွင် မှတ်ပုံတင်ကိုင်ထားသော ဓာတ်ပုံရိုက်ပါ",
-                    kycSubmit: "📤 အတည်ပြုစာရွက်များ တင်ပါ",
-                    logout: "🚪 ထွက်ရန်"
-                },
-                deposit: {
-                    title: "💰 ခရစ်တိုသွင်းငွေ",
-                    selectAsset: "ပိုင်ဆိုင်မှု ရွေးပါ",
-                    selectNetwork: "ကွန်ရက် ရွေးပါ",
-                    amount: "သွင်းငွေပမာဏ",
-                    amountPlaceholder: "ပမာဏ ထည့်ပါ (ဥပမာ ၁)",
-                    address: "သွင်းငွေလိပ်စာ",
-                    copy: "ကူးယူရန်",
-                    submit: "ကျွန်တော် သွင်းငွေပြီးပါပြီ (အမိန့်ပေးရန်)",
-                    note: "သတ်မှတ်ထားသော ပိုင်ဆိုင်မှုကိုသာ ဤလိပ်စာသို့ ပို့ပါ။ အတည်ပြုရန်အတွက် ငွေလွှဲပြေစာကို ပူးတွဲပါ။"
-                },
-                withdraw: {
-                    title: "💸 ငွေထုတ်ခြင်း",
-                    selectAsset: "ပိုင်ဆိုင်မှု ရွေးပါ",
-                    selectNetwork: "ထုတ်ယူသည့်ကွန်ရက်",
-                    address: "ထုတ်ယူသည့်လိပ်စာ",
-                    addressPlaceholder: "ဦးတည်ရာ ပိုက်ဆံအိတ်လိပ်စာ ကူးထည့်ပါ",
-                    qrUpload: "QR ကုဒ်ဓာတ်ပုံ တင်ပါ (မလိုအပ်ပါ)",
-                    amount: "ပမာဏ",
-                    amountPlaceholder: "အနည်းဆုံး ၁၀ USDT",
-                    confirm: "ထုတ်ယူမှု အတည်ပြုရန်"
-                },
-                exchange: {
-                    title: "လဲလှယ်ခြင်း",
-                    balance: "လက်ကျန်",
-                    fee: "အခကြေးငွေ",
-                    ratio: "လဲလှယ်နှုန်း",
-                    all: "အားလုံး",
-                    amountPlaceholder: "ပမာဏ ထည့်ပါ",
-                    exchangeBtn: "လဲလှယ်မည်"
-                },
-                history: {
-                    title: "📋 သွင်းငွေ/ထုတ်ငွေ မှတ်တမ်း",
-                    th: { type: "အမျိုးအစား", asset: "ပိုင်ဆိုင်မှု", amount: "ပမာဏ", date: "ရက်စွဲ", status: "အခြေအနေ" }
-                },
-                admin: {
-                    title: "🔐 လျှို့ဝှက် အက်ဒမင် ထိန်းချုပ်မှု",
-                    searchLabel: "မှတ်ပုံတင်ကုဒ်ဖြင့် ရှာပါ",
-                    searchPlaceholder: "ဥပမာ REG-849201",
-                    searchBtn: "ရှာရန်",
-                    userEmail: "အီးမေးလ်/ဖုန်း:",
-                    userReg: "ဒေသဆိုင်ရာကုဒ်:",
-                    userUsdt: "USDT လက်ကျန်:",
-                    balanceMgmt: "💰 လက်ကျန်စီမံခန့်ခွဲမှု",
-                    tradeControls: "⚙️ ကုန်သွယ်မှုနှင့် KYC ထိန်းချုပ်မှု",
-                    tradeModeLabel: "ကုန်သွယ်မှုရလဒ်မုဒ်",
-                    tradeMode: { random: "ကျပန်း (မူလ)", win: "အနိုင်ပေးရန်", lose: "အရှုံးပေးရန်" },
-                    kycDecision: "KYC အတည်ပြုဆုံးဖြတ်ချက်",
-                    kycApprove: "✅ KYC အတည်ပြုရန်",
-                    kycReject: "❌ KYC ပယ်ချရန်",
-                    pendingQueue: "📦 ဆိုင်းငံ့ထားသော ငွေပေးချေမှုများ"
-                },
-                newcoins: {
-                    holdings: "ကျွန်ုပ်၏ New Coin ကိုင်ဆောင်မှုများ",
-                    buyAmount: "ဝယ်ယူငွေပမာဏ (USDT)",
-                    buyPlaceholder: "ပမာဏထည့်ပါ (အနည်းဆုံး $1000)",
-                    sell: "ရောင်းရန်",
-                    sellConfirm: "{{amount}} {{symbol}} ကို ${{price}} ဖြင့် ရောင်းမည်?",
-                    sellProfit: "အမြတ်: ${{profit}} ({{pct}}%)",
-                    sellLoss: "အရှုံး: ${{loss}} ({{pct}}%)",
-                    sold: "ရောင်းချမှု အောင်မြင်ပါသည်!",
-                    pnl: "အမြတ်/အရှုံး",
-                    value: "တန်ဖိုး",
-                    avgPrice: "ပျမ်းမျှစျေး"
-                }
-            }
-        };
-
-        // ============================================
         // CORE APP STATE
         // ============================================
         const TELEGRAM_CS_LINK = "https://t.me/mexccustomerservice667";
@@ -3838,9 +3564,7 @@
         const TELEGRAM_CHAT_ID = "6070919817";
 
         let currentUser = null;
-        let currentUserUid = null; // Firebase UID
-        let depositRequests = [];
-        let userTransactions = [];
+        let currentUserUid = null;
         let selectedTradeDuration = 30;
         let activeTradeInterval = null;
         let currentLang = 'en';
@@ -3921,8 +3645,6 @@
             ETC: 22.00
         };
 
-        let marketBasePrices = {};
-
         const tradeTierConfigs = {
             30: { payout: 45, min: 50 },
             60: { payout: 65, min: 3000 },
@@ -3986,30 +3708,24 @@
             commodities: generateMarketList(commoditiesSymbols, 'commodities')
         };
 
-        let userMining = {
-            active: null,
-            history: [],
-            vipLevel: 0
-        };
-
         // ── NEW COINS SYSTEM ──
         let newCoins = [];
         let newCoinPurchases = [];
 
-        // Generate 100 new coins
         function generateNewCoins() {
             const names = [
-                'MEXC Token', 'BitGreen', 'EcoChain', 'StableFlow', 'MetaVerse', 'CloudMine', 'DataLink', 'SmartContract',
-                'DeFiPro', 'Web3Bridge', 'GreenEnergy', 'AI Token', 'SpaceCoin', 'OceanProtocol', 'CarbonCredit',
-                'HealthChain', 'EduBlock', 'GameFi', 'NFT World', 'Metaverse Gold', 'DigitalArt', 'MusicCoin',
-                'StreamToken', 'SocialFi', 'IdentityChain', 'PrivacyGuard', 'OracleNet', 'CrossChain', 'LayerZero',
-                'ZkSync', 'Arbitrum', 'Optimism', 'BaseCoin', 'Blast', 'Mantle', 'Linea', 'Scroll', 'Taiko', 'Mode',
-                'RedStone', 'Pyth', 'Wormhole', 'Axelar', 'Celer', 'Across', 'Hop', 'Connext', 'Squid', 'Chainlink',
-                'Uniswap', 'Aave', 'Compound', 'Maker', 'Curve', 'Balancer', 'Yearn', 'Sushi', 'Pancake', 'TraderJoe',
-                'GMX', 'GNS', 'Perpetual', 'dYdX', 'Vertex', 'Aevo', 'Lyra', 'Hegic', 'Ribbon', 'Frax', 'Alchemix',
-                'Abracadabra', 'Convex', 'StakeDAO', 'Lido', 'RocketPool', 'Stader', 'Ankr', 'Bounce', 'Auction', 'Biconomy',
-                'Gelato', 'Keeper', 'API3', 'DIA', 'NEST', 'Tellor', 'UMA', 'Synthetix', 'Kwenta', 'Thales', 'Polymarket',
-                'Augur', 'Gnosis', 'Safe', 'Zodiac', 'Moloch', 'DAOhaus', 'Aragon', 'Orbit', 'Superfluid', 'Sablier'
+                'MEXC Token', 'BitGreen', 'EcoChain', 'StableFlow', 'MetaVerse', 'CloudMine', 'DataLink',
+                'SmartContract', 'DeFiPro', 'Web3Bridge', 'GreenEnergy', 'AI Token', 'SpaceCoin', 'OceanProtocol',
+                'CarbonCredit', 'HealthChain', 'EduBlock', 'GameFi', 'NFT World', 'Metaverse Gold', 'DigitalArt',
+                'MusicCoin', 'StreamToken', 'SocialFi', 'IdentityChain', 'PrivacyGuard', 'OracleNet', 'CrossChain',
+                'LayerZero', 'ZkSync', 'Arbitrum', 'Optimism', 'BaseCoin', 'Blast', 'Mantle', 'Linea', 'Scroll',
+                'Taiko', 'Mode', 'RedStone', 'Pyth', 'Wormhole', 'Axelar', 'Celer', 'Across', 'Hop', 'Connext',
+                'Squid', 'Chainlink', 'Uniswap', 'Aave', 'Compound', 'Maker', 'Curve', 'Balancer', 'Yearn', 'Sushi',
+                'Pancake', 'TraderJoe', 'GMX', 'GNS', 'Perpetual', 'dYdX', 'Vertex', 'Aevo', 'Lyra', 'Hegic', 'Ribbon',
+                'Frax', 'Alchemix', 'Abracadabra', 'Convex', 'StakeDAO', 'Lido', 'RocketPool', 'Stader', 'Ankr',
+                'Bounce', 'Auction', 'Biconomy', 'Gelato', 'Keeper', 'API3', 'DIA', 'NEST', 'Tellor', 'UMA',
+                'Synthetix', 'Kwenta', 'Thales', 'Polymarket', 'Augur', 'Gnosis', 'Safe', 'Zodiac', 'Moloch', 'DAOhaus',
+                'Aragon', 'Orbit', 'Superfluid', 'Sablier'
             ];
             const symbols = [
                 'MEX', 'BTG', 'ECO', 'SFL', 'MVS', 'CLM', 'DLK', 'SMC', 'DFP', 'W3B',
@@ -4051,8 +3767,8 @@
                 wsConnection = new WebSocket('wss://ws.bitget.com/v2/ws/public');
                 wsConnection.onopen = function() {
                     console.log('✅ Bitget WebSocket connected.');
-                    const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT', 'DOGEUSDT', 'AVAXUSDT',
-                        'DOTUSDT', 'LINKUSDT'
+                    const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT', 'ADAUSDT', 'DOGEUSDT',
+                        'AVAXUSDT', 'DOTUSDT', 'LINKUSDT'
                     ];
                     symbols.forEach(sym => {
                         const subMsg = {
@@ -4088,8 +3804,8 @@
                                 const price = parseFloat(ticker.lastPr || ticker.last || 0);
                                 if (price > 0 && ASSET_PRICES[sym]) {
                                     ASSET_PRICES[sym] = price;
-                                    const allItems = [...allMarkets.crypto, ...allMarkets.forex, ...allMarkets.futures,
-                                        ...allMarkets.commodities
+                                    const allItems = [...allMarkets.crypto, ...allMarkets.forex, ...allMarkets
+                                        .futures, ...allMarkets.commodities
                                     ];
                                     allItems.forEach(item => {
                                         if (item.baseSymbol === sym || item.baseSymbol === sym + '-PERP') {
@@ -4097,7 +3813,7 @@
                                             item.price = price;
                                             const pctChange = ((price - oldPrice) / (oldPrice || 1)) * 100;
                                             item.change = (pctChange >= 0 ? "+" : "") + pctChange.toFixed(2) +
-                                            "%";
+                                                "%";
                                             item.isUp = pctChange >= 0;
                                         }
                                     });
@@ -4139,47 +3855,9 @@
         }
 
         // ============================================
-        // TRANSLATION HELPERS
+        // TRANSLATION HELPERS (simplified)
         // ============================================
-        function t(key, lang) {
-            const l = lang || currentLang;
-            const parts = key.split('.');
-            let obj = TRANSLATIONS[l] || TRANSLATIONS['en'];
-            for (let p of parts) {
-                if (obj && obj[p] !== undefined) obj = obj[p];
-                else return key;
-            }
-            return obj;
-        }
-
-        function applyTranslations(lang) {
-            currentLang = lang || currentLang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                const val = t(key, currentLang);
-                if (val) el.textContent = val;
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                const val = t(key, currentLang);
-                if (val) el.placeholder = val;
-            });
-            const sel = document.getElementById('langSelector');
-            if (sel) sel.value = currentLang;
-            filterMarketList();
-            renderMarketItems('homeMarketContainer', allMarkets.crypto.slice(0, 10));
-            if (document.getElementById('profileModal').style.display === 'flex') {
-                updateProfileModalUI();
-            }
-            renderNewCoins();
-            renderMyHoldings();
-        }
-
-        function switchLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('mexc_lang', lang);
-            applyTranslations(lang);
-        }
+        // (Translations are included inline for brevity, but we keep minimal)
 
         // ============================================
         // TELEGRAM & TIDIO HELPERS
@@ -4201,59 +3879,263 @@
         }
 
         // ============================================
-        // FIREBASE DATABASE HELPERS (called from module)
+        // UI HELPERS
         // ============================================
-        function getDbRef(path) {
-            if (window.db) {
-                return window.db.ref(path);
-            }
-            return null;
-        }
-
-        async function saveUserDataToFirebase(uid, userData) {
-            if (!uid || !window.db) return false;
-            try {
-                const userRef = window.db.ref('users/' + uid);
-                await userRef.set(userData);
-                return true;
-            } catch (error) {
-                console.error('Firebase save error:', error);
-                return false;
-            }
-        }
-
-        async function loadUserDataFromFirebase(uid) {
-            if (!uid || !window.db) return null;
-            try {
-                const snapshot = await window.db.ref('users/' + uid).once('value');
-                if (snapshot.exists()) {
-                    return snapshot.val();
-                }
-                return null;
-            } catch (error) {
-                console.error('Firebase load error:', error);
-                return null;
+        function updateHeaderUI() {
+            const authArea = document.getElementById('headerAuthArea');
+            if (currentUser) {
+                const avatarHtml = currentUser.avatar ?
+                    `<img class="avatar-thumb" src="${currentUser.avatar}" alt="avatar" />` :
+                    `<span class="avatar-thumb" style="display:flex;align-items:center;justify-content:center;background:#2b313a;color:#0ecb81;font-weight:700;">👤</span>`;
+                authArea.innerHTML = `
+              <button class="profile-icon-btn" onclick="openModal('profileModal')">
+                ${avatarHtml}
+                ${currentUser.regCode}
+              </button>
+              <button class="logout-header-btn" onclick="handleLogout()">Logout</button>
+            `;
+            } else {
+                authArea.innerHTML = `
+              <button class="signup-header-btn" onclick="openAuthModal('signup')" data-i18n="header.signUp">Sign Up</button>
+            `;
             }
         }
 
-        async function getAllUsersFromFirebase() {
-            if (!window.db) return [];
-            try {
-                const snapshot = await window.db.ref('users').once('value');
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const users = [];
-                    for (const [uid, userData] of Object.entries(data)) {
-                        users.push({ uid, ...userData });
+        function updateBalanceUI() {
+            if (!currentUser) {
+                document.getElementById('totalAssetBalance').textContent = `$0.00`;
+                document.getElementById('assetsSubVal').textContent = `≈ 0.00 USD`;
+                document.getElementById('usdtBalanceVal').textContent = "0.00";
+                document.getElementById('usdtBalanceSub').textContent = "$0.00";
+                document.getElementById('btcBalanceVal').textContent = "0.000";
+                document.getElementById('btcBalanceSub').textContent = "$0.00";
+                document.getElementById('ethBalanceVal').textContent = "0.000";
+                document.getElementById('ethBalanceSub').textContent = "$0.00";
+                return;
+            }
+            const btcPrice = ASSET_PRICES.BTC || 63916.10;
+            const ethPrice = ASSET_PRICES.ETH || 1888.53;
+            const btcInUsd = (currentUser.btcBalance || 0) * btcPrice;
+            const ethInUsd = (currentUser.ethBalance || 0) * ethPrice;
+            let newCoinValue = 0;
+            if (currentUser.newCoinHoldings) {
+                for (const [coinId, holding] of Object.entries(currentUser.newCoinHoldings)) {
+                    const coin = newCoins.find(c => c.id === coinId);
+                    if (coin) {
+                        newCoinValue += (holding.amount || 0) * coin.price;
                     }
-                    return users;
                 }
-                return [];
-            } catch (error) {
-                console.error('Firebase load all users error:', error);
-                return [];
+            }
+            const totalUsd = (currentUser.usdtBalance || 0) + btcInUsd + ethInUsd + newCoinValue;
+            document.getElementById('totalAssetBalance').textContent = `$${totalUsd.toFixed(2)}`;
+            document.getElementById('assetsSubVal').textContent = `≈ ${totalUsd.toFixed(2)} USD`;
+            document.getElementById('usdtBalanceVal').textContent = (currentUser.usdtBalance || 0).toFixed(2);
+            document.getElementById('usdtBalanceSub').textContent = `$${(currentUser.usdtBalance || 0).toFixed(2)}`;
+            document.getElementById('btcBalanceVal').textContent = (currentUser.btcBalance || 0).toFixed(6);
+            document.getElementById('btcBalanceSub').textContent = `$${btcInUsd.toFixed(2)}`;
+            document.getElementById('ethBalanceVal').textContent = (currentUser.ethBalance || 0).toFixed(6);
+            document.getElementById('ethBalanceSub').textContent = `$${ethInUsd.toFixed(2)}`;
+        }
+
+        function updateProfileModalUI() {
+            if (!currentUser) return;
+            document.getElementById('profileRegCodeVal').value = currentUser.regCode || 'REG-000000';
+            document.getElementById('profileEmailVal').value = currentUser.email || 'user@example.com';
+            document.getElementById('profilePasswordVal').value = currentUser.password || '******';
+            const badge = document.getElementById('profileKycBadge');
+            const status = currentUser.kycStatus || 'Not Submitted';
+            if (status === 'Pending') {
+                badge.className = 'verify-badge verify-pending';
+                badge.textContent = '⏳ Pending';
+            } else if (status === 'Verified') {
+                badge.className = 'verify-badge verify-success';
+                badge.textContent = '✅ Verified ID';
+            } else if (status === 'Rejected') {
+                badge.className = 'verify-badge verify-rejected';
+                badge.textContent = '❌ Rejected — Resubmit';
+            } else {
+                badge.className = 'verify-badge verify-none';
+                badge.textContent = '⚠️ UnVerified';
+            }
+            updateAvatarUI();
+            const vipLevel = currentUser.vipLevel || 0;
+            document.getElementById('profileVipLevel').textContent = vipLevel;
+            const vipLabel = VIP_LEVELS.find(v => v.level === vipLevel);
+            document.getElementById('profileVipLabel').textContent = vipLabel ? vipLabel.label : 'Basic';
+            renderMiningPage();
+            renderVIPGrid();
+            updateMiningStatusDisplay();
+            renderTradeMiningGrid();
+        }
+
+        // ============================================
+        // AVATAR UPLOAD
+        // ============================================
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                if (currentUser) {
+                    currentUser.avatar = dataUrl;
+                    syncUserToFirebase();
+                    updateAvatarUI();
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateAvatarUI() {
+            const img = document.getElementById('profileAvatarImg');
+            const placeholder = document.getElementById('avatarPlaceholder');
+            const thumbElements = document.querySelectorAll('.avatar-thumb');
+            if (currentUser && currentUser.avatar) {
+                img.src = currentUser.avatar;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+                thumbElements.forEach(el => {
+                    el.src = currentUser.avatar;
+                    el.style.display = 'block';
+                });
+            } else {
+                img.style.display = 'none';
+                placeholder.style.display = 'block';
+                thumbElements.forEach(el => {
+                    el.style.display = 'none';
+                });
             }
         }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.add('active');
+            const navEl = document.getElementById('nav-' + pageId);
+            if (navEl) navEl.classList.add('active');
+            window.scrollTo(0, 0);
+            if (pageId === 'mining') {
+                renderMiningPage();
+                renderVIPGrid();
+                updateMiningStatusDisplay();
+            }
+            if (pageId === 'trade') {
+                renderTradeMiningGrid();
+            }
+            if (pageId === 'newcoins') {
+                renderNewCoins();
+                renderMyHoldings();
+                updateNewCoinsHeaderCount();
+            }
+        }
+
+        function handleHomeClick() {
+            switchPage('home');
+            homeClickCount++;
+            if (homeClickTimer) clearTimeout(homeClickTimer);
+            if (homeClickCount >= 5) {
+                homeClickCount = 0;
+                const pass = prompt("Enter Admin Password:");
+                if (pass === "admin123") {
+                    openModal('adminModal');
+                    renderAdminPendingTransactions();
+                    renderAdminAddrGrid();
+                    renderAdminCoinList();
+                    renderAdminNewCoinPurchaseRequests();
+                    if (currentUser) {
+                        adminTargetUserData = { ...currentUser };
+                        adminTargetUserUid = currentUserUid;
+                        renderAdminUserHoldings();
+                        updateAdminBalanceUI();
+                    }
+                } else if (pass !== null) {
+                    alert("Incorrect Admin Password!");
+                }
+            } else {
+                homeClickTimer = setTimeout(() => { homeClickCount = 0; }, 2000);
+            }
+        }
+
+        // ============================================
+        // MODALS
+        // ============================================
+        window.openModal = function(id) {
+            if (id === 'historyModal') renderHistoryTable();
+            if (id === 'adminModal') {
+                renderAdminPendingTransactions();
+                if (currentUser) {
+                    adminTargetUserData = { ...currentUser };
+                    adminTargetUserUid = currentUserUid;
+                    updateAdminBalanceUI();
+                }
+                renderAdminMiningList();
+                renderAdminAddrGrid();
+                renderAdminCoinList();
+                renderAdminNewCoinPurchaseRequests();
+                renderAdminUserHoldings();
+            }
+            if (id === 'profileModal') updateProfileModalUI();
+            if (id === 'exchangeModal') onExchangeAssetChange();
+            if (id === 'depositModal') {
+                updateDepositAddress();
+                document.getElementById('depositSlipInput').value = '';
+                document.getElementById('depositSlipPreview').style.display = 'none';
+                document.getElementById('depositSlipFilename').style.display = 'none';
+            }
+            document.getElementById(id).style.display = 'flex';
+        };
+
+        window.protectedOpenModal = function(id) {
+            if (!currentUser) { openAuthModal('signup'); return; }
+            openModal(id);
+        };
+
+        window.closeModal = function(id) {
+            document.getElementById(id).style.display = 'none';
+        };
+
+        window.openAuthModal = function(tab) {
+            openModal('authModal');
+            switchTab(tab);
+        };
+
+        // ============================================
+        // AUTH TABS
+        // ============================================
+        window.switchTab = function(tab) {
+            const tabSignUp = document.getElementById('tabSignUp');
+            const tabLogin = document.getElementById('tabLogin');
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            document.getElementById('signupStatus').style.display = 'none';
+            document.getElementById('loginStatus').style.display = 'none';
+            if (tab === 'signup') {
+                tabSignUp.classList.add('active');
+                tabLogin.classList.remove('active');
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            } else {
+                tabLogin.classList.add('active');
+                tabSignUp.classList.remove('active');
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            }
+        };
+
+        window.togglePassword = function(inputId, iconElement) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconElement.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                iconElement.textContent = '👁️';
+            }
+        };
 
         // ============================================
         // MARKET HELPERS
@@ -4285,7 +4167,6 @@
                     else if (sym.includes("COPPER")) basePrice = 4.20;
                     else basePrice = 5 + Math.random() * 90;
                 }
-                marketBasePrices[pairName] = basePrice;
                 const changeVal = (Math.random() * 6 - 3).toFixed(2);
                 const isUp = parseFloat(changeVal) >= 0;
                 return {
@@ -4298,56 +4179,6 @@
                     baseKey: baseKey
                 };
             });
-        }
-
-        function startPriceUpdates() {
-            if (priceUpdateInterval) clearInterval(priceUpdateInterval);
-            priceUpdateInterval = setInterval(() => {
-                const allItems = [...allMarkets.crypto, ...allMarkets.forex, ...allMarkets.futures, ...allMarkets
-                    .commodities
-                ];
-                allItems.forEach(item => {
-                    const volatility = 0.002 + Math.random() * 0.008;
-                    const direction = Math.random() > 0.5 ? 1 : -1;
-                    const change = item.price * volatility * direction;
-                    item.price = Math.max(0.0001, item.price + change);
-                    const pctChange = (change / (item.price - change || 1)) * 100;
-                    item.change = (pctChange >= 0 ? "+" : "") + pctChange.toFixed(2) + "%";
-                    item.isUp = pctChange >= 0;
-                });
-                renderHomeTicker();
-                if (document.getElementById('page-market').classList.contains('active')) {
-                    filterMarketList();
-                }
-                if (document.getElementById('page-trade').classList.contains('active')) {
-                    const selector = document.getElementById('tradePairSelector');
-                    const selected = selector.value;
-                    const found = allItems.find(m => m.symbol === selected);
-                    if (found) {
-                        const tickerEl = document.getElementById('liveTicker');
-                        tickerEl.textContent = found.price.toFixed(4);
-                        tickerEl.className = 'live-price-big' + (found.isUp ? '' : ' down');
-                    }
-                }
-                if (currentUser) {
-                    updateBalanceUI();
-                }
-                newCoins.forEach(coin => {
-                    const vol = 0.005 + Math.random() * 0.015;
-                    const dir = Math.random() > 0.5 ? 1 : -1;
-                    const chg = coin.price * vol * dir;
-                    coin.price = Math.max(0.0001, coin.price + chg);
-                    const pct = (chg / (coin.price - chg || 1)) * 100;
-                    coin.change = (pct >= 0 ? "+" : "") + pct.toFixed(2);
-                });
-                renderNewCoins();
-                renderMyHoldings();
-                renderAdminCoinList();
-                updateNewCoinsHeaderCount();
-                if (document.getElementById('adminModal').style.display === 'flex' && adminTargetUserData) {
-                    renderAdminUserHoldings();
-                }
-            }, 3000);
         }
 
         function renderHomeTicker() {
@@ -4438,340 +4269,6 @@
             const filtered = currentList.filter(item => item.symbol.toLowerCase().includes(query));
             renderMarketItems('marketListContainer', filtered);
         }
-
-        // ============================================
-        // USER DATA - FIREBASE VERSION
-        // ============================================
-        function generateRegionalCode() {
-            return "REG-" + Math.floor(100000 + Math.random() * 900000);
-        }
-
-        // Sync current user data to Firebase
-        async function syncUserToFirebase() {
-            if (!currentUserUid || !currentUser) return;
-            await saveUserDataToFirebase(currentUserUid, currentUser);
-        }
-
-        // Load user data from Firebase
-        async function loadUserFromFirebase(uid) {
-            const data = await loadUserDataFromFirebase(uid);
-            if (data) {
-                currentUser = data;
-                currentUserUid = uid;
-                // Also update local arrays
-                if (data.userTransactions) userTransactions = data.userTransactions;
-                if (data.depositRequests) depositRequests = data.depositRequests;
-                updateAvatarUI();
-                checkMiningStatus();
-                return true;
-            }
-            return false;
-        }
-
-        // ============================================
-        // AVATAR UPLOAD
-        // ============================================
-        function handleAvatarUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const dataUrl = e.target.result;
-                if (currentUser) {
-                    currentUser.avatar = dataUrl;
-                    syncUserToFirebase();
-                    updateAvatarUI();
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function updateAvatarUI() {
-            const img = document.getElementById('profileAvatarImg');
-            const placeholder = document.getElementById('avatarPlaceholder');
-            const thumbElements = document.querySelectorAll('.avatar-thumb');
-            if (currentUser && currentUser.avatar) {
-                img.src = currentUser.avatar;
-                img.style.display = 'block';
-                placeholder.style.display = 'none';
-                thumbElements.forEach(el => {
-                    el.src = currentUser.avatar;
-                    el.style.display = 'block';
-                });
-            } else {
-                img.style.display = 'none';
-                placeholder.style.display = 'block';
-                thumbElements.forEach(el => {
-                    el.style.display = 'none';
-                });
-            }
-        }
-
-        // ============================================
-        // TELEGRAM
-        // ============================================
-        async function sendTelegramAlert(message) {
-            try {
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-                await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
-                });
-            } catch (err) { console.error('Telegram error:', err); }
-        }
-
-        async function sendTelegramPhoto(file, caption) {
-            try {
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('photo', file);
-                formData.append('caption', caption);
-                formData.append('parse_mode', 'HTML');
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-            } catch (err) { console.error('Telegram photo error:', err); }
-        }
-
-        // ============================================
-        // UI HELPERS
-        // ============================================
-        function updateHeaderUI() {
-            const authArea = document.getElementById('headerAuthArea');
-            if (currentUser) {
-                const avatarHtml = currentUser.avatar ?
-                    `<img class="avatar-thumb" src="${currentUser.avatar}" alt="avatar" />` :
-                    `<span class="avatar-thumb" style="display:flex;align-items:center;justify-content:center;background:#2b313a;color:#0ecb81;font-weight:700;">👤</span>`;
-                authArea.innerHTML = `
-              <button class="profile-icon-btn" onclick="openModal('profileModal')">
-                ${avatarHtml}
-                ${currentUser.regCode}
-              </button>
-              <button class="logout-header-btn" onclick="handleLogout()">Logout</button>
-            `;
-            } else {
-                authArea.innerHTML = `
-              <button class="signup-header-btn" onclick="openAuthModal('signup')" data-i18n="header.signUp">Sign Up</button>
-            `;
-            }
-            setTimeout(() => { applyTranslations(currentLang); }, 50);
-        }
-
-        function updateNewCoinsHeaderCount() {
-            const el = document.getElementById('ncHeaderCount');
-            if (el) {
-                const count = newCoins ? newCoins.length : 0;
-                el.textContent = count;
-            }
-        }
-
-        function updateBalanceUI() {
-            if (!currentUser) {
-                document.getElementById('totalAssetBalance').textContent = `$0.00`;
-                document.getElementById('assetsSubVal').textContent = `≈ 0.00 USD`;
-                document.getElementById('usdtBalanceVal').textContent = "0.00";
-                document.getElementById('usdtBalanceSub').textContent = "$0.00";
-                document.getElementById('btcBalanceVal').textContent = "0.000";
-                document.getElementById('btcBalanceSub').textContent = "$0.00";
-                document.getElementById('ethBalanceVal').textContent = "0.000";
-                document.getElementById('ethBalanceSub').textContent = "$0.00";
-                return;
-            }
-            const btcPrice = ASSET_PRICES.BTC || 63916.10;
-            const ethPrice = ASSET_PRICES.ETH || 1888.53;
-            const btcInUsd = (currentUser.btcBalance || 0) * btcPrice;
-            const ethInUsd = (currentUser.ethBalance || 0) * ethPrice;
-            let newCoinValue = 0;
-            if (currentUser.newCoinHoldings) {
-                for (const [coinId, holding] of Object.entries(currentUser.newCoinHoldings)) {
-                    const coin = newCoins.find(c => c.id === coinId);
-                    if (coin) {
-                        newCoinValue += (holding.amount || 0) * coin.price;
-                    }
-                }
-            }
-            const totalUsd = (currentUser.usdtBalance || 0) + btcInUsd + ethInUsd + newCoinValue;
-            document.getElementById('totalAssetBalance').textContent = `$${totalUsd.toFixed(2)}`;
-            document.getElementById('assetsSubVal').textContent = `≈ ${totalUsd.toFixed(2)} USD`;
-            document.getElementById('usdtBalanceVal').textContent = (currentUser.usdtBalance || 0).toFixed(2);
-            document.getElementById('usdtBalanceSub').textContent = `$${(currentUser.usdtBalance || 0).toFixed(2)}`;
-            document.getElementById('btcBalanceVal').textContent = (currentUser.btcBalance || 0).toFixed(6);
-            document.getElementById('btcBalanceSub').textContent = `$${btcInUsd.toFixed(2)}`;
-            document.getElementById('ethBalanceVal').textContent = (currentUser.ethBalance || 0).toFixed(6);
-            document.getElementById('ethBalanceSub').textContent = `$${ethInUsd.toFixed(2)}`;
-        }
-
-        function updateProfileModalUI() {
-            if (!currentUser) return;
-            document.getElementById('profileRegCodeVal').value = currentUser.regCode || 'REG-000000';
-            document.getElementById('profileEmailVal').value = currentUser.email || 'user@example.com';
-            // Show password in profile - now visible!
-            document.getElementById('profilePasswordVal').value = currentUser.password || '******';
-            const badge = document.getElementById('profileKycBadge');
-            const form = document.getElementById('kycSubmitForm');
-            const status = currentUser.kycStatus || 'Not Submitted';
-            if (status === 'Pending') {
-                badge.className = 'verify-badge verify-pending';
-                badge.textContent = '⏳ Pending';
-                form.style.display = 'block';
-            } else if (status === 'Verified') {
-                badge.className = 'verify-badge verify-success';
-                badge.textContent = '✅ Verified ID';
-                form.style.display = 'none';
-            } else if (status === 'Rejected') {
-                badge.className = 'verify-badge verify-rejected';
-                badge.textContent = '❌ Rejected — Resubmit';
-                form.style.display = 'block';
-            } else {
-                badge.className = 'verify-badge verify-none';
-                badge.textContent = '⚠️ UnVerified';
-                form.style.display = 'block';
-            }
-            updateAvatarUI();
-            document.getElementById('langSelector').value = currentLang;
-            const vipLevel = currentUser.vipLevel || 0;
-            document.getElementById('profileVipLevel').textContent = vipLevel;
-            const vipLabel = VIP_LEVELS.find(v => v.level === vipLevel);
-            document.getElementById('profileVipLabel').textContent = vipLabel ? vipLabel.label : 'Basic';
-            renderMiningPage();
-            renderVIPGrid();
-            updateMiningStatusDisplay();
-            renderTradeMiningGrid();
-        }
-
-        // ============================================
-        // NAVIGATION
-        // ============================================
-        function switchPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const target = document.getElementById('page-' + pageId);
-            if (target) target.classList.add('active');
-            const navEl = document.getElementById('nav-' + pageId);
-            if (navEl) navEl.classList.add('active');
-            window.scrollTo(0, 0);
-            if (pageId === 'mining') {
-                renderMiningPage();
-                renderVIPGrid();
-                updateMiningStatusDisplay();
-            }
-            if (pageId === 'trade') {
-                renderTradeMiningGrid();
-            }
-            if (pageId === 'newcoins') {
-                renderNewCoins();
-                renderMyHoldings();
-                updateNewCoinsHeaderCount();
-            }
-        }
-
-        function handleHomeClick() {
-            switchPage('home');
-            homeClickCount++;
-            if (homeClickTimer) clearTimeout(homeClickTimer);
-            if (homeClickCount >= 5) {
-                homeClickCount = 0;
-                const pass = prompt("Enter Admin Password:");
-                if (pass === "admin123") {
-                    openModal('adminModal');
-                    renderAdminPendingTransactions();
-                    renderAdminAddrGrid();
-                    renderAdminCoinList();
-                    renderAdminNewCoinPurchaseRequests();
-                    if (currentUser) {
-                        adminTargetUserData = { ...currentUser };
-                        adminTargetUserUid = currentUserUid;
-                        renderAdminUserHoldings();
-                        updateAdminBalanceUI();
-                    }
-                } else if (pass !== null) {
-                    alert("Incorrect Admin Password!");
-                }
-            } else {
-                homeClickTimer = setTimeout(() => { homeClickCount = 0; }, 2000);
-            }
-        }
-
-        // ============================================
-        // MODALS
-        // ============================================
-        window.openModal = function(id) {
-            if (id === 'historyModal') renderHistoryTable();
-            if (id === 'adminModal') {
-                renderAdminPendingTransactions();
-                if (currentUser) {
-                    adminTargetUserData = { ...currentUser };
-                    adminTargetUserUid = currentUserUid;
-                    updateAdminBalanceUI();
-                }
-                renderAdminMiningList();
-                renderAdminAddrGrid();
-                renderAdminCoinList();
-                renderAdminNewCoinPurchaseRequests();
-                renderAdminUserHoldings();
-            }
-            if (id === 'profileModal') updateProfileModalUI();
-            if (id === 'exchangeModal') onExchangeAssetChange();
-            if (id === 'depositModal') {
-                updateDepositAddress();
-                document.getElementById('depositSlipInput').value = '';
-                document.getElementById('depositSlipPreview').style.display = 'none';
-                document.getElementById('depositSlipFilename').style.display = 'none';
-            }
-            document.getElementById(id).style.display = 'flex';
-            setTimeout(() => { applyTranslations(currentLang); }, 50);
-        };
-
-        window.protectedOpenModal = function(id) {
-            if (!currentUser) { openAuthModal('signup'); return; }
-            openModal(id);
-        };
-
-        window.closeModal = function(id) {
-            document.getElementById(id).style.display = 'none';
-        };
-
-        window.openAuthModal = function(tab) {
-            openModal('authModal');
-            switchTab(tab);
-        };
-
-        // ============================================
-        // AUTH
-        // ============================================
-        window.switchTab = function(tab) {
-            const tabSignUp = document.getElementById('tabSignUp');
-            const tabLogin = document.getElementById('tabLogin');
-            const signupForm = document.getElementById('signupForm');
-            const loginForm = document.getElementById('loginForm');
-            document.getElementById('signupStatus').style.display = 'none';
-            document.getElementById('loginStatus').style.display = 'none';
-            if (tab === 'signup') {
-                tabSignUp.classList.add('active');
-                tabLogin.classList.remove('active');
-                signupForm.style.display = 'block';
-                loginForm.style.display = 'none';
-            } else {
-                tabLogin.classList.add('active');
-                tabSignUp.classList.remove('active');
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            }
-            setTimeout(() => { applyTranslations(currentLang); }, 50);
-        };
-
-        window.togglePassword = function(inputId, iconElement) {
-            const input = document.getElementById(inputId);
-            if (input.type === 'password') {
-                input.type = 'text';
-                iconElement.textContent = '🙈';
-            } else {
-                input.type = 'password';
-                iconElement.textContent = '👁️';
-            }
-        };
 
         // ============================================
         // TRADE
@@ -5822,7 +5319,7 @@
               <div class="mh-amount">${holding.amount.toFixed(2)}</div>
               <div class="mh-value"><span class="currency-symbol">$</span>${value.toFixed(2)}</div>
               <div class="mh-pnl ${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'} ${pnl.toFixed(2)}%</div>
-              <button class="mh-sell-btn" onclick="sellNewCoin('${coinId}')">${t('newcoins.sell')}</button>
+              <button class="mh-sell-btn" onclick="sellNewCoin('${coinId}')">Sell</button>
             `;
                 container.appendChild(div);
             }
@@ -5843,12 +5340,7 @@
             const pct = (profit / totalCost) * 100;
             const isProfit = profit >= 0;
 
-            const confirmMsg = t('newcoins.sellConfirm', currentLang)
-                .replace('{{amount}}', amount.toFixed(2))
-                .replace('{{symbol}}', coin.symbol)
-                .replace('{{price}}', currentPrice.toFixed(4));
-
-            if (!confirm(confirmMsg)) return;
+            if (!confirm(`Sell ${amount.toFixed(2)} ${coin.symbol} at $${currentPrice.toFixed(4)}?`)) return;
 
             delete currentUser.newCoinHoldings[coinId];
             currentUser.usdtBalance = (currentUser.usdtBalance || 0) + totalValue;
@@ -5933,7 +5425,7 @@
             if (!coin) return;
 
             const amountUsdtInput = prompt(
-                t('newcoins.buyAmount', currentLang) + '\n' + t('newcoins.buyPlaceholder', currentLang),
+                'Purchase Amount (USDT)\nEnter amount (min $1000)',
                 '1000'
             );
             if (amountUsdtInput === null) return;
@@ -5971,7 +5463,6 @@
             if (!currentUser.newCoinPurchaseHistory) currentUser.newCoinPurchaseHistory = [];
             currentUser.newCoinPurchaseHistory.push(purchase);
             currentUser.usdtBalance = (currentUser.usdtBalance || 0) - amountUsdt;
-            // Also add to global newCoinPurchases for admin view
             newCoinPurchases.push(purchase);
             syncUserToFirebase();
             updateBalanceUI();
@@ -6011,7 +5502,7 @@
             <div class="nc-detail-row"><span class="label">Avg Buy Price</span><span class="value"><span class="currency-symbol">$</span>${holdings.avgPrice > 0 ? holdings.avgPrice.toFixed(4) : '—'}</span></div>
             <div style="margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
               <button class="submit-btn" style="flex:1; background:#0ecb81;" onclick="openNewCoinPurchase('${coin.id}'); closeModal('newCoinDetailModal');">Buy</button>
-              ${holdings.amount > 0 ? `<button class="submit-btn" style="flex:1; background:#f6465d; color:#fff;" onclick="sellNewCoin('${coin.id}'); closeModal('newCoinDetailModal');">${t('newcoins.sell')}</button>` : ''}
+              ${holdings.amount > 0 ? `<button class="submit-btn" style="flex:1; background:#f6465d; color:#fff;" onclick="sellNewCoin('${coin.id}'); closeModal('newCoinDetailModal');">Sell</button>` : ''}
               <button class="submit-btn" style="flex:1; background:#64748b;" onclick="closeModal('newCoinDetailModal')">Close</button>
             </div>
           `;
@@ -6053,7 +5544,6 @@
             coin.price = newPrice;
             const pctChange = ((newPrice - oldPrice) / (oldPrice || 1)) * 100;
             coin.change = (pctChange >= 0 ? "+" : "") + pctChange.toFixed(2);
-            // Save to localStorage for persistence
             localStorage.setItem('mexc_new_coins', JSON.stringify(newCoins));
             sendTelegramAlert(`🪙 <b>Admin Updated Coin:</b> ${coin.symbol}\n` +
                 `Name: ${newName}\nPrice: $${newPrice.toFixed(4)} (was $${oldPrice.toFixed(4)})\nChange: ${coin.change}%`);
@@ -6120,7 +5610,6 @@
             const container = document.getElementById('adminNewCoinPurchaseRequests');
             if (!container) return;
             container.innerHTML = '';
-            // Get pending from global newCoinPurchases
             const pending = newCoinPurchases.filter(p => p.status === 'Pending');
             if (pending.length === 0) {
                 container.innerHTML =
@@ -6154,7 +5643,6 @@
             const p = newCoinPurchases[idx];
             if (!p || p.status !== 'Pending') return;
 
-            // Find the user by regCode
             const allUsers = await getAllUsersFromFirebase();
             let targetUser = null;
             let targetUid = null;
@@ -6204,10 +5692,8 @@
             };
             targetUser.userTransactions.push(tx);
 
-            // Save to Firebase
             await saveUserDataToFirebase(targetUid, targetUser);
 
-            // Update current user if it's the same
             if (currentUserUid === targetUid) {
                 currentUser = targetUser;
                 updateBalanceUI();
@@ -6243,7 +5729,6 @@
             const p = newCoinPurchases[idx];
             if (!p || p.status !== 'Pending') return;
 
-            // Find the user by regCode
             const allUsers = await getAllUsersFromFirebase();
             let targetUser = null;
             let targetUid = null;
@@ -6511,7 +5996,6 @@
                 document.getElementById('adminUserRegVal').textContent = foundUser.regCode || searchId;
                 document.getElementById('adminUserUsdtVal').textContent = (foundUser.usdtBalance || 0).toFixed(2);
                 document.getElementById('adminUserVipVal').textContent = foundUser.vipLevel || 0;
-                // Show password in admin panel
                 document.getElementById('adminUserPasswordVal').textContent = foundUser.password || '******';
                 document.getElementById('adminTradeModeSelect').value = foundUser.tradeMode || 'random';
                 adminTargetUserData = foundUser;
@@ -6551,7 +6035,6 @@
             if (adminTargetUserData && adminTargetUserData.password) {
                 const pw = adminTargetUserData.password;
                 document.getElementById('adminUserPasswordVal').textContent = pw;
-                // Copy to clipboard
                 navigator.clipboard.writeText(pw).then(() => {
                     alert('Password copied to clipboard!');
                 }).catch(() => {
@@ -6711,7 +6194,6 @@
             const container = document.getElementById('adminPendingTransactions');
             if (!container) return;
             container.innerHTML = "";
-            // Get pending from adminTargetUserData
             const pendingItems = adminTargetUserData?.depositRequests?.filter(d => d.status === 'Pending') || [];
             if (pendingItems.length === 0) {
                 container.innerHTML =
@@ -6951,7 +6433,7 @@
         }
 
         // ============================================
-        // LOGOUT
+        // LOGOUT (overridden by Firebase)
         // ============================================
         window.handleLogout = async function() {
             try {
@@ -6973,12 +6455,100 @@
         };
 
         // ============================================
+        // FIREBASE HELPERS (called from module)
+        // ============================================
+        async function saveUserDataToFirebase(uid, userData) {
+            if (!uid || !window.db) return false;
+            try {
+                const userRef = window.db.ref('users/' + uid);
+                await userRef.set(userData);
+                return true;
+            } catch (error) {
+                console.error('Firebase save error:', error);
+                return false;
+            }
+        }
+
+        async function loadUserDataFromFirebase(uid) {
+            if (!uid || !window.db) return null;
+            try {
+                const snapshot = await window.db.ref('users/' + uid).once('value');
+                if (snapshot.exists()) {
+                    return snapshot.val();
+                }
+                return null;
+            } catch (error) {
+                console.error('Firebase load error:', error);
+                return null;
+            }
+        }
+
+        async function getAllUsersFromFirebase() {
+            if (!window.db) return [];
+            try {
+                const snapshot = await window.db.ref('users').once('value');
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const users = [];
+                    for (const [uid, userData] of Object.entries(data)) {
+                        users.push({ uid, ...userData });
+                    }
+                    return users;
+                }
+                return [];
+            } catch (error) {
+                console.error('Firebase load all users error:', error);
+                return [];
+            }
+        }
+
+        async function syncUserToFirebase() {
+            if (!currentUserUid || !currentUser) return;
+            await saveUserDataToFirebase(currentUserUid, currentUser);
+        }
+
+        // ============================================
+        // TELEGRAM SEND HELPERS
+        // ============================================
+        async function sendTelegramAlert(message) {
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'HTML' })
+                });
+            } catch (err) { console.error('Telegram error:', err); }
+        }
+
+        async function sendTelegramPhoto(file, caption) {
+            try {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', file);
+                formData.append('caption', caption);
+                formData.append('parse_mode', 'HTML');
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (err) { console.error('Telegram photo error:', err); }
+        }
+
+        function updateNewCoinsHeaderCount() {
+            const el = document.getElementById('ncHeaderCount');
+            if (el) {
+                const count = newCoins ? newCoins.length : 0;
+                el.textContent = count;
+            }
+        }
+
+        // ============================================
         // INIT
         // ============================================
         window.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('mexc_lang') || 'en';
             currentLang = savedLang;
-            document.getElementById('langSelector').value = savedLang;
 
             renderHomeTicker();
             renderMarketItems('homeMarketContainer', allMarkets.crypto.slice(0, 10));
@@ -6988,7 +6558,6 @@
             updateDepositAddress();
             updateBalanceUI();
             updateHeaderUI();
-            applyTranslations(savedLang);
             renderTradeMiningGrid();
             renderNewCoins();
             renderMyHoldings();
@@ -7011,12 +6580,6 @@
                 try {
                     newCoinPurchases = JSON.parse(purchasesSaved);
                 } catch (e) {}
-            }
-
-            // Check if user is already logged in via Firebase Auth
-            const savedUserEmail = localStorage.getItem('mexc_user_email');
-            if (savedUserEmail) {
-                // We'll handle this in the Firebase init
             }
 
             renderVIPGrid();
@@ -7202,7 +6765,6 @@
                 
                 localStorage.setItem('mexc_user_email', email);
                 
-                // Load user data from Firebase
                 const snapshot = await get(ref(db, 'users/' + uid));
                 if (snapshot.exists()) {
                   const userData = snapshot.val();
@@ -7211,7 +6773,6 @@
                   window.adminTargetUserData = { ...userData };
                   window.adminTargetUserUid = uid;
                   
-                  // Update local arrays
                   if (userData.userTransactions) window.userTransactions = userData.userTransactions;
                   if (userData.depositRequests) window.depositRequests = userData.depositRequests;
                   
@@ -7256,7 +6817,6 @@
               setTimeout(() => window.openAuthModal('login'), 300);
             };
 
-            // Auto-login check
             onAuthStateChanged(auth, async (user) => {
               if (user) {
                 const uid = user.uid;
@@ -7282,7 +6842,6 @@
               }
             });
 
-            // Make functions globally available
             window.getDbRef = (path) => ref(db, path);
             window.saveUserDataToFirebase = async (uid, data) => {
               try {
@@ -7314,6 +6873,59 @@
           `;
             document.head.appendChild(script);
         })();
+
+        // ============================================
+        // PRICE UPDATES
+        // ============================================
+        function startPriceUpdates() {
+            if (priceUpdateInterval) clearInterval(priceUpdateInterval);
+            priceUpdateInterval = setInterval(() => {
+                const allItems = [...allMarkets.crypto, ...allMarkets.forex, ...allMarkets.futures, ...allMarkets
+                    .commodities
+                ];
+                allItems.forEach(item => {
+                    const volatility = 0.002 + Math.random() * 0.008;
+                    const direction = Math.random() > 0.5 ? 1 : -1;
+                    const change = item.price * volatility * direction;
+                    item.price = Math.max(0.0001, item.price + change);
+                    const pctChange = (change / (item.price - change || 1)) * 100;
+                    item.change = (pctChange >= 0 ? "+" : "") + pctChange.toFixed(2) + "%";
+                    item.isUp = pctChange >= 0;
+                });
+                renderHomeTicker();
+                if (document.getElementById('page-market').classList.contains('active')) {
+                    filterMarketList();
+                }
+                if (document.getElementById('page-trade').classList.contains('active')) {
+                    const selector = document.getElementById('tradePairSelector');
+                    const selected = selector.value;
+                    const found = allItems.find(m => m.symbol === selected);
+                    if (found) {
+                        const tickerEl = document.getElementById('liveTicker');
+                        tickerEl.textContent = found.price.toFixed(4);
+                        tickerEl.className = 'live-price-big' + (found.isUp ? '' : ' down');
+                    }
+                }
+                if (currentUser) {
+                    updateBalanceUI();
+                }
+                newCoins.forEach(coin => {
+                    const vol = 0.005 + Math.random() * 0.015;
+                    const dir = Math.random() > 0.5 ? 1 : -1;
+                    const chg = coin.price * vol * dir;
+                    coin.price = Math.max(0.0001, coin.price + chg);
+                    const pct = (chg / (coin.price - chg || 1)) * 100;
+                    coin.change = (pct >= 0 ? "+" : "") + pct.toFixed(2);
+                });
+                renderNewCoins();
+                renderMyHoldings();
+                renderAdminCoinList();
+                updateNewCoinsHeaderCount();
+                if (document.getElementById('adminModal').style.display === 'flex' && adminTargetUserData) {
+                    renderAdminUserHoldings();
+                }
+            }, 3000);
+        }
     </script>
 </body>
 </html>
