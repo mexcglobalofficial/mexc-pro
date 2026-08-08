@@ -3903,9 +3903,9 @@
         // ── VIP Levels ──
         const VIP_LEVELS = [
             { level: 0, label: 'Basic', cost: 0, benefits: 'No early-stop', canStop: [] },
-            { level: 1, label: 'VIP 1', cost: 100000, benefits: 'Can stop 3d & 5d mining early • Instant profit', canStop: ['3d', '5d'] },
-            { level: 2, label: 'VIP 2', cost: 300000, benefits: 'Can stop 3d, 5d, 7d mining early • Instant profit', canStop: ['3d', '5d', '7d'] },
-            { level: 3, label: 'VIP 3', cost: 1000000, benefits: 'Can stop ANY mining early • Instant profit on all packages', canStop: ['3d', '5d', '7d', '10d', '30d'] }
+            { level: 1, label: 'VIP 1', cost: 100000, benefits: 'Can stop 3d & 5d mining early • Instant full profit', canStop: ['3d', '5d'] },
+            { level: 2, label: 'VIP 2', cost: 300000, benefits: 'Can stop 3d, 5d, 7d mining early • Instant full profit', canStop: ['3d', '5d', '7d'] },
+            { level: 3, label: 'VIP 3', cost: 1000000, benefits: 'Can stop ANY mining early • Instant full profit on all packages', canStop: ['3d', '5d', '7d', '10d', '30d'] }
         ];
 
         // ── Asset Prices ──
@@ -5528,7 +5528,7 @@
         }
 
         // ============================================
-        // MINING SYSTEM (Enhanced VIP Early-Stop)
+        // MINING SYSTEM (Enhanced VIP Early-Stop with Full Profit)
         // ============================================
         function renderMiningPage() {
             const container = document.getElementById('miningPackageContainer');
@@ -5574,7 +5574,7 @@
                 </div>
               `;
                     if (canStop) {
-                        statusHTML += `<button class="btn-start" style="background:#f6465d; color:#fff; margin-top:6px;" onclick="stopMiningEarly('${pkg.id}')">⏹️ Stop Early & Collect</button>`;
+                        statusHTML += `<button class="btn-start" style="background:#f6465d; color:#fff; margin-top:6px;" onclick="stopMiningEarly('${pkg.id}')">⏹️ Stop Early & Collect Full Profit</button>`;
                     }
                 } else if (isCompleted) {
                     const profit = activeMining.totalProfit || 0;
@@ -5662,26 +5662,57 @@
             renderTradeMiningGrid();
         }
 
-        // VIP Early-Stop: collect all profit + principal
+        /**
+         * VIP Early-Stop: Credits the FULL profit for the entire package duration,
+         * not just the days run. This ensures the user gets the full expected return.
+         */
         function stopMiningEarly(packageId) {
-            if (!currentUser) return;
-            const active = currentUser.mining?.active;
-            if (!active || active.packageId !== packageId || active.status !== 'active') {
-                alert('No active mining to stop.');
+            if (!currentUser) {
+                alert('Please login first.');
                 return;
             }
-            const pkg = MINING_PACKAGES.find(p => p.id === packageId);
-            if (!pkg) return;
+
+            const active = currentUser.mining?.active;
+            if (!active) {
+                alert('No active mining found.');
+                return;
+            }
+
+            // Check if the active mining matches the package we're trying to stop
+            if (active.packageId !== packageId) {
+                alert(`Active mining package (${active.packageId}) does not match the requested package (${packageId}). Please refresh and try again.`);
+                return;
+            }
+
+            if (active.status !== 'active') {
+                alert('This mining is not active. Current status: ' + active.status);
+                return;
+            }
+
+            // Find the package definition
+            const pkg = MINING_PACKAGES.find(p => p.id === active.packageId);
+            if (!pkg) {
+                alert('Package configuration not found. Please contact admin.');
+                return;
+            }
+
+            // Verify VIP permission
             const vipLevel = currentUser.vipLevel || 0;
             const vipData = VIP_LEVELS.find(v => v.level === vipLevel);
-            if (!vipData || !vipData.canStop.includes(packageId)) {
+            if (!vipData || !vipData.canStop.includes(active.packageId)) {
                 alert(`Your VIP level (${vipData ? vipData.label : 'Basic'}) cannot stop this package early. Upgrade VIP to unlock.`);
                 return;
             }
-            const daysRunning = Math.floor((Date.now() - new Date(active.startDate).getTime()) / (1000 * 60 * 60 * 24));
-            const interestEarned = (active.amount * pkg.dailyRate / 100) * daysRunning;
-            const totalPayout = active.amount + interestEarned;
+
+            // Calculate FULL profit for the entire duration (all days)
+            const totalDays = pkg.days;
+            const fullInterest = (active.amount * pkg.dailyRate / 100) * totalDays;
+            const totalPayout = active.amount + fullInterest;
+
+            // Credit the user's balance with the full amount (principal + full profit)
             currentUser.usdtBalance += totalPayout;
+
+            // Record transaction
             const tx = {
                 type: 'Mining',
                 id: "MIN-" + Date.now().toString().slice(-6),
@@ -5689,28 +5720,40 @@
                 regCode: currentUser.regCode,
                 email: currentUser.email,
                 asset: 'USDT',
-                amount: `${pkg.label} • ${daysRunning}d`,
+                amount: `${pkg.label} • ${totalDays}d (Early Stop)`,
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
                 status: 'Approved',
-                detail: `+$${totalPayout.toFixed(2)} (Early Stop)`
+                detail: `+$${totalPayout.toFixed(2)} (Full ${totalDays}d profit)`
             };
             userTransactions.push(tx);
+
+            // Mark as completed
             active.status = 'completed';
             active.totalProfit = totalPayout - active.amount;
+            // Save to history
+            if (!currentUser.mining.history) currentUser.mining.history = [];
             currentUser.mining.history.push({ ...active, completedAt: new Date().toISOString() });
+            // Clear active mining
             currentUser.mining.active = null;
+
+            // Save and update UI
             saveUserData();
             updateBalanceUI();
-            sendTelegramAlert(`⏹️ <b>Mining Stopped Early (VIP)</b>\n\n` +
-                `👤 <b>User:</b> ${currentUser.regCode}\n📦 <b>Package:</b> ${pkg.label}\n💰 <b>Payout:</b> $${totalPayout.toFixed(2)} (Profit: $${(totalPayout - active.amount).toFixed(2)})`);
+
+            // Notifications
+            sendTelegramAlert(`⏹️ <b>Mining Stopped Early (VIP) — Full Profit Collected!</b>\n\n` +
+                `👤 <b>User:</b> ${currentUser.regCode}\n📦 <b>Package:</b> ${pkg.label}\n💰 <b>Payout:</b> $${totalPayout.toFixed(2)} (Profit: $${(totalPayout - active.amount).toFixed(2)})\n📊 <b>Full ${totalDays} Days Profit</b>`);
+
             showStatusOverlay(
                 '🎉',
-                'Mining Stopped Early!',
-                `Package: ${pkg.label} • Days run: ${daysRunning}`,
+                'Mining Stopped Early — Full Profit!',
+                `Package: ${pkg.label} • Full ${totalDays} days profit collected!`,
                 `Total Payout: $${totalPayout.toFixed(2)} • Profit: $${(totalPayout - active.amount).toFixed(2)}`,
                 'success',
                 '✅ Done'
             );
+
+            // Re-render pages
             renderMiningPage();
             updateMiningStatusDisplay();
             renderTradeMiningGrid();
@@ -7179,4 +7222,3 @@
         });
     </script>
 </body>
-</html>
