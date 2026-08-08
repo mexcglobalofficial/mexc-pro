@@ -3731,6 +3731,17 @@
         const auth = firebase.auth();
 
         // ============================================
+        // 🔐 PERSISTENCE SETTINGS (ပြန်လည်ဝင်ရောက်ရန် မလိုအောင် သတ်မှတ်ခြင်း)
+        // ============================================
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => {
+                console.log("✅ Firebase persistence set to LOCAL. User will stay logged in.");
+            })
+            .catch((error) => {
+                console.warn("⚠️ Persistence setting error:", error);
+            });
+
+        // ============================================
         // TRANSLATIONS (i18n) — full for all supported languages
         // ============================================
         const TRANSLATIONS = {
@@ -3868,7 +3879,7 @@
                     avgPrice: "Avg Price"
                 }
             },
-            // ... (other languages truncated for brevity, same as before)
+            // ... (other languages remain unchanged for brevity, but can be added here if needed)
         };
 
         // ============================================
@@ -7131,31 +7142,65 @@
         };
 
         // ============================================
-        // FIREBASE AUTH LISTENERS
+        // FIREBASE AUTH LISTENERS (ပိုမိုခိုင်မာအောင် ပြင်ဆင်ထားသော)
         // ============================================
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                const loaded = await loadUserData(user.uid);
+                console.log("🔐 User authenticated:", user.uid);
+                let loaded = await loadUserData(user.uid);
+                
                 if (!loaded) {
-                    // Create default user data if not exists
-                    currentUser = {
-                        uid: user.uid,
-                        email: user.email,
-                        password: '******',
-                        regCode: "REG-" + Math.floor(100000 + Math.random() * 900000),
-                        usdtBalance: 0.00,
-                        btcBalance: 0.000,
-                        ethBalance: 0.000,
-                        tradeMode: 'random',
-                        kycStatus: 'Not Submitted',
-                        avatar: '',
-                        vipLevel: 0,
-                        mining: { active: null, history: [], vipLevel: 0 },
-                        newCoinHoldings: {},
-                        newCoinPurchaseHistory: []
-                    };
-                    await saveUserData();
+                    // User သည် Auth မှာရှိပေမယ့် Database မှာ မရှိသေးရင် အသစ်ဖန်တီးပါ
+                    const userRef = getDbRef('users/' + user.uid);
+                    const snapshot = await userRef.once('value');
+                    if (!snapshot.exists()) {
+                        // ပထမဆုံး အကြိမ် ဝင်ရောက်ခြင်း → User အသစ် ဖန်တီး
+                        currentUser = {
+                            uid: user.uid,
+                            email: user.email,
+                            password: '******',
+                            regCode: "REG-" + Math.floor(100000 + Math.random() * 900000),
+                            usdtBalance: 0.00,
+                            btcBalance: 0.000,
+                            ethBalance: 0.000,
+                            tradeMode: 'random',
+                            kycStatus: 'Not Submitted',
+                            avatar: '',
+                            vipLevel: 0,
+                            mining: { active: null, history: [], vipLevel: 0 },
+                            newCoinHoldings: {},
+                            newCoinPurchaseHistory: []
+                        };
+                        await saveUserData();
+                        console.log("🆕 New user created:", currentUser.regCode);
+                    } else {
+                        // Snapshot ရှိပေမယ့် loadUserData မအောင်မြင်ခဲ့ရင် ထပ်မံဖတ်ယူ
+                        const data = snapshot.val();
+                        currentUser = {
+                            uid: user.uid,
+                            email: data.email,
+                            regCode: data.regCode,
+                            usdtBalance: data.usdtBalance || 0,
+                            btcBalance: data.btcBalance || 0,
+                            ethBalance: data.ethBalance || 0,
+                            tradeMode: data.tradeMode || 'random',
+                            kycStatus: data.kycStatus || 'Not Submitted',
+                            password: data.password || '******',
+                            avatar: data.avatar || '',
+                            vipLevel: data.vipLevel || 0,
+                            mining: data.mining || { active: null, history: [], vipLevel: 0 },
+                            newCoinHoldings: data.newCoinHoldings || {},
+                            newCoinPurchaseHistory: data.newCoinPurchaseHistory || [],
+                            userTransactions: data.userTransactions || [],
+                            depositRequests: data.depositRequests || []
+                        };
+                        userTransactions = currentUser.userTransactions;
+                        depositRequests = currentUser.depositRequests;
+                        console.log("🔄 Reloaded user data from existing node.");
+                    }
                 }
+                
+                // ဒီနေရာမှာ currentUser ရှိနေပြီးသား
                 adminTargetUserData = { ...currentUser };
                 updateHeaderUI();
                 updateBalanceUI();
@@ -7166,9 +7211,13 @@
                 renderNewCoins();
                 renderMyHoldings();
                 updateNewCoinsHeaderCount();
-                // Load global data
                 await loadGlobalData();
+                
+                // Auth Modal ကိုပိတ်ထားရန် (အကယ်၍ ဖွင့်ထားမိရင်)
+                closeModal('authModal');
+                
             } else {
+                // Logout state
                 currentUser = null;
                 adminTargetUserData = null;
                 updateHeaderUI();
@@ -7177,6 +7226,7 @@
                 renderNewCoins();
                 renderMyHoldings();
                 updateNewCoinsHeaderCount();
+                console.log("👋 User logged out.");
             }
         });
 
