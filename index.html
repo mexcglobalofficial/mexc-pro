@@ -2,8 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>MEXC Global — Trade. Earn. Grow.</title>
+    
+    <!-- PWA Manifest & Meta Tags for Add to Home Screen -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MEXC Global" />
+    <link rel="apple-touch-icon" href="logo.png" />
+    <link rel="icon" type="image/png" href="logo.png" sizes="192x192" />
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+
     <!-- Tidio Live Chat -->
     <script src="//code.tidio.co/uybsw5qviwgs9udrjyyokobmhehkkli7.js" async></script>
     
@@ -5548,7 +5570,7 @@
                 const card = document.createElement('div');
                 card.className = 'mining-package-card';
                 const isActive = activeMining && activeMining.packageId === pkg.id;
-                const isPending = activeMining && activeMining.status === 'pending' && activeMining.packageId === pkg.id;
+                const isPending = isActive && activeMining.status === 'pending' && activeMining.packageId === pkg.id;
                 const isCompleted = activeMining && activeMining.status === 'completed' && activeMining.packageId === pkg.id;
                 const canStart = !hasActive || (isActive && activeMining.status === 'completed');
                 const canStop = isActive && (activeMining.status === 'active') && canStopPackages.includes(pkg.id);
@@ -7222,3 +7244,4 @@
         });
     </script>
 </body>
+</html>
