@@ -1,0 +1,21 @@
+{
+  "name": "MEXC Global",
+  "short_name": "MEXC",
+  "description": "Trade. Earn. Grow.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0b0e11",
+  "theme_color": "#0ecb81",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
